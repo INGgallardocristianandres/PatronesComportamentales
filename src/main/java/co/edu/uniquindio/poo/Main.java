@@ -1,17 +1,40 @@
 package co.edu.uniquindio.poo;
 
-//TIP To <b>Run</b> code, press <shortcut actionId="Run"/> or
-// click the <icon src="AllIcons.Actions.Execute"/> icon in the gutter.
-public class Main {
-    static void main() {
-        //TIP Press <shortcut actionId="ShowIntentionActions"/> with your caret at the highlighted text
-        // to see how IntelliJ IDEA suggests fixing it.
-        IO.println(String.format("Hello and welcome!"));
+import co.edu.uniquindio.poo.model.EditorTexto;
+import co.edu.uniquindio.poo.model.EscribirTexto;
+import co.edu.uniquindio.poo.model.HistorialComandos;
+import co.edu.uniquindio.poo.model.IComando;
 
-        for (int i = 1; i <= 5; i++) {
-            //TIP Press <shortcut actionId="Debug"/> to start debugging your code. We have set one <icon src="AllIcons.Debugger.Db_set_breakpoint"/> breakpoint
-            // for you, but you can always add more by pressing <shortcut actionId="ToggleLineBreakpoint"/>.
-            IO.println("i = " + i);
-        }
+public class Main {
+    public static void main(String[] args) {
+        EditorTexto editor = new EditorTexto();
+
+        HistorialComandos historial = new HistorialComandos();
+        System.out.println("PRUEBA SOLUCION PATRON COMMAND EDITOR DE TEXTO");
+
+        IComando cmd1 = new EscribirTexto(editor, "Hola ");
+        historial.ejecutarComando(cmd1);
+        System.out.println("Texto actual: " + editor.getContenido());
+
+        IComando cmd2 = new EscribirTexto(editor, "Mundo ");
+        historial.ejecutarComando(cmd2);
+        System.out.println("Texto actual: " + editor.getContenido());
+
+        IComando cmd3 = new EscribirTexto (editor, "Smart!");
+        IComando cmd3Real = new EscribirTexto(editor, "Java!");
+        historial.ejecutarComando(cmd3Real);
+        System.out.println("Texto actual: " + editor.getContenido());
+
+
+        System.out.println("\n APLICANDO DESHACER ");
+        historial.deshacer();
+        System.out.println("Texto tras deshacer: " + editor.getContenido());
+
+        historial.deshacer();
+        System.out.println("Texto tras segundo deshacer: " + editor.getContenido());
+
+        System.out.println("\n APLICANDO REHACER ");
+        historial.rehacer();
+        System.out.println("Texto tras rehacer: " + editor.getContenido());
     }
 }
